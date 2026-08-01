@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\TaskController;
 
 Route::post('/register',[AuthController::class,'register']);
 
@@ -14,5 +15,18 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout',[AuthController::class,'logout']);
 
     Route::apiResource('projects', ProjectController::class);
+
+    Route::get('tasks', [TaskController::class, 'index']);
+
+    Route::post(
+        'projects/{project}/tasks',
+        [TaskController::class, 'store']
+    );
+
+    Route::get('tasks/{task}', [TaskController::class, 'show']);
+
+    Route::put('tasks/{task}', [TaskController::class, 'update']);
+
+    Route::delete('tasks/{task}', [TaskController::class, 'destroy']);
 
 });
