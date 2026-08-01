@@ -24,8 +24,6 @@ class TaskFactory extends Factory
 
             'title' => fake()->sentence(),
 
-            'description' => fake()->paragraph(),
-
             'priority' => fake()->randomElement([
                 TaskPriority::LOW,
                 TaskPriority::MEDIUM,
