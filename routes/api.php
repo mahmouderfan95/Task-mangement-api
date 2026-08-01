@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\TaskController;
+use App\Http\Controllers\Api\DashboardController;
 
 Route::post('/register',[AuthController::class,'register']);
 
@@ -29,4 +30,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::delete('tasks/{task}', [TaskController::class, 'destroy']);
 
+    Route::get(
+        'dashboard',
+        [DashboardController::class, 'index']
+    )->middleware('auth:sanctum');
 });

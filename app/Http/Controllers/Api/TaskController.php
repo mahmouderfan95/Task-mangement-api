@@ -7,10 +7,12 @@ use App\Http\Requests\Task\StoreTaskRequest;
 use App\Http\Requests\Task\UpdateTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Services\TaskService;
+use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+    use ApiResponse;
     public function __construct(
         protected TaskService $service
     ) {
@@ -42,10 +44,11 @@ class TaskController extends Controller
             $request->validated()
         );
 
-        return response()->json([
-            'message' => 'Task created successfully',
-            'data' => new TaskResource($task)
-        ], 201);
+        return $this->success(
+            new TaskResource($task),
+            'Task created successfully',
+            201
+        );
     }
 
     /**
@@ -70,10 +73,11 @@ class TaskController extends Controller
             $request->validated()
         );
 
-        return response()->json([
-            'message' => 'Task updated successfully',
-            'data' => new TaskResource($task)
-        ]);
+        return $this->success(
+            new TaskResource($task),
+            'Task Updated successfully',
+            201
+        );
     }
 
     /**
@@ -85,8 +89,10 @@ class TaskController extends Controller
 
         $this->service->delete($task);
 
-        return response()->json([
-            'message' => 'Task deleted successfully'
-        ]);
+        return $this->success(
+            [],
+            'Task created successfully',
+            201
+        );
     }
 }

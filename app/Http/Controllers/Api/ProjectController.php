@@ -7,11 +7,13 @@ use App\Http\Requests\Project\StoreProjectRequest;
 use App\Http\Requests\Project\UpdateProjectRequest;
 use App\Http\Resources\ProjectResource;
 use App\Services\ProjectService;
+use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+    use ApiResponse;
     public function __construct(
         protected ProjectService $projectService
     ) {}
@@ -36,10 +38,11 @@ class ProjectController extends Controller
             $request->validated()
         );
 
-        return response()->json([
-            'message' => 'Project created successfully',
-            'data' => new ProjectResource($project),
-        ], 201);
+        return $this->success(
+            new ProjectResource($project),
+            'Project created successfully',
+            201
+        );
     }
 
     /**
@@ -67,10 +70,11 @@ class ProjectController extends Controller
             $request->validated()
         );
 
-        return response()->json([
-            'message' => 'Project updated successfully',
-            'data' => new ProjectResource($project),
-        ]);
+        return $this->success(
+            new ProjectResource($project),
+            'Project Updated successfully',
+            201
+        );
     }
 
     /**
@@ -82,8 +86,10 @@ class ProjectController extends Controller
 
         $this->projectService->delete($project);
 
-        return response()->json([
-            'message' => 'Project deleted successfully',
-        ], 200);
+        return $this->success(
+            [],
+            'Project Deleted successfully',
+            201
+        );
     }
 }
