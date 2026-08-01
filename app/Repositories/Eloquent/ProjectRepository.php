@@ -13,6 +13,7 @@ class ProjectRepository implements ProjectRepositoryInterface
         return auth()
             ->user()
             ->projects()
+            ->withCount('tasks')
             ->latest()
             ->paginate($perPage);
     }
@@ -20,9 +21,11 @@ class ProjectRepository implements ProjectRepositoryInterface
     public function find(int $id): Project
     {
         return auth()
-            ->user()
-            ->projects()
-            ->findOrFail($id);
+                ->user()
+                ->projects()
+                ->with('tasks')
+                ->withCount('tasks')
+                ->findOrFail($id);
     }
 
     public function create(array $data): Project

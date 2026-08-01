@@ -12,9 +12,9 @@ class ProjectService
     ) {
     }
 
-    public function paginate()
+    public function paginate(int $perPage = 10)
     {
-        return $this->repository->paginate();
+        return $this->repository->paginate($perPage);
     }
 
     public function find(int $id): Project
