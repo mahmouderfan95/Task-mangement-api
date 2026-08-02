@@ -10,9 +10,42 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
-
+/**
+ * @OA\Tag(
+ *     name="Authentication",
+ *     description="Authentication APIs"
+ * )
+ */
 class AuthController extends Controller
 {
+    /**
+ * @OA\Post(
+ *      path="/api/register",
+ *      tags={"Authentication"},
+ *      summary="Register User",
+ *
+ *      @OA\RequestBody(
+ *          required=true,
+ *
+ *          @OA\JsonContent(
+ *              required={"name","email","password","password_confirmation"},
+ *
+ *              @OA\Property(property="name", type="string", example="Ahmed"),
+ *
+ *              @OA\Property(property="email", type="string", example="ahmed@test.com"),
+ *
+ *              @OA\Property(property="password", type="string", example="password"),
+ *
+ *              @OA\Property(property="password_confirmation", type="string", example="password")
+ *          )
+ *      ),
+ *
+ *      @OA\Response(
+ *          response=201,
+ *          description="User registered successfully"
+ *      )
+ * )
+ */
     public function register(RegisterRequest $request)
     {
         $user = User::create([
@@ -37,6 +70,29 @@ class AuthController extends Controller
 
         ],201);
     }
+    /**
+ * @OA\Post(
+ *      path="/api/login",
+ *      tags={"Authentication"},
+ *      summary="Login",
+ *
+ *      @OA\RequestBody(
+ *          required=true,
+ *
+ *          @OA\JsonContent(
+ *
+ *              @OA\Property(property="email",type="string"),
+ *
+ *              @OA\Property(property="password",type="string")
+ *          )
+ *      ),
+ *
+ *      @OA\Response(
+ *          response=200,
+ *          description="Login Successfully"
+ *      )
+ * )
+ */
 
     public function login(LoginRequest $request)
     {
